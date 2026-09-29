@@ -1,0 +1,312 @@
+<Window x:Class="DynamicIslandApp.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Dynamic Island Settings"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        Width="400"
+        Height="560"
+        WindowStartupLocation="CenterScreen"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        RenderOptions.ClearTypeHint="Enabled"
+        RenderOptions.BitmapScalingMode="HighQuality"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+
+    <Window.Resources>
+        <!-- Purple Slider Style -->
+        <Style x:Key="PurpleSliderStyle" TargetType="Slider">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Slider">
+                        <Grid VerticalAlignment="Center" Height="24">
+                            <Track x:Name="PART_Track">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}">
+                                        <RepeatButton.Template>
+                                            <ControlTemplate>
+                                                <Border Background="#8B5CF6" Height="6" CornerRadius="3"/>
+                                            </ControlTemplate>
+                                        </RepeatButton.Template>
+                                    </RepeatButton>
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}">
+                                        <RepeatButton.Template>
+                                            <ControlTemplate>
+                                                <Border Background="#252433" Height="6" CornerRadius="3"/>
+                                            </ControlTemplate>
+                                        </RepeatButton.Template>
+                                    </RepeatButton>
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Template>
+                                            <ControlTemplate>
+                                                <Grid Width="18" Height="18">
+                                                    <Ellipse Fill="White">
+                                                        <Ellipse.Effect>
+                                                            <DropShadowEffect BlurRadius="6" ShadowDepth="1" Color="#000000" Opacity="0.4"/>
+                                                        </Ellipse.Effect>
+                                                    </Ellipse>
+                                                    <Ellipse Width="8" Height="8" Fill="#8B5CF6"/>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Cyan Slider Style -->
+        <Style x:Key="CyanSliderStyle" TargetType="Slider">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Slider">
+                        <Grid VerticalAlignment="Center" Height="24">
+                            <Track x:Name="PART_Track">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}">
+                                        <RepeatButton.Template>
+                                            <ControlTemplate>
+                                                <Border Background="#38BDF8" Height="6" CornerRadius="3"/>
+                                            </ControlTemplate>
+                                        </RepeatButton.Template>
+                                    </RepeatButton>
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}">
+                                        <RepeatButton.Template>
+                                            <ControlTemplate>
+                                                <Border Background="#252433" Height="6" CornerRadius="3"/>
+                                            </ControlTemplate>
+                                        </RepeatButton.Template>
+                                    </RepeatButton>
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Template>
+                                            <ControlTemplate>
+                                                <Grid Width="18" Height="18">
+                                                    <Ellipse Fill="White">
+                                                        <Ellipse.Effect>
+                                                            <DropShadowEffect BlurRadius="6" ShadowDepth="1" Color="#000000" Opacity="0.4"/>
+                                                        </Ellipse.Effect>
+                                                    </Ellipse>
+                                                    <Ellipse Width="8" Height="8" Fill="#38BDF8"/>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- Main Container Card -->
+    <Border Background="#13121B"
+            BorderBrush="#2A2838"
+            BorderThickness="1"
+            CornerRadius="16"
+            Margin="10">
+
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="25" Direction="270" ShadowDepth="6" Opacity="0.75" Color="#000000"/>
+        </Border.Effect>
+
+        <Grid Margin="20,18,20,16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/> <!-- Header -->
+                <RowDefinition Height="*"/>    <!-- Settings Body -->
+                <RowDefinition Height="Auto"/> <!-- Bottom Tabs -->
+            </Grid.RowDefinitions>
+
+            <!-- 1. Header -->
+            <Grid Grid.Row="0" Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Pill Icon -->
+                <Border Grid.Column="0" Width="38" Height="38" Background="#242136" CornerRadius="10" Margin="0,0,12,0">
+                    <Path HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="12" Stretch="Uniform" Fill="#A78BFA"
+                          Data="M 6,0 H 18 C 21.3,0 24,2.7 24,6 C 24,9.3 21.3,12 18,12 H 6 C 2.7,12 0,9.3 0,6 C 0,2.7 2.7,0 6,0 Z"/>
+                </Border>
+
+                <!-- Titles -->
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="Dynamic Island" Foreground="#FFFFFF" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI, Arial"/>
+                    <TextBlock Text="Personalize your desktop pill" Foreground="#7D7B90" FontSize="11" FontFamily="Segoe UI, Arial" Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <!-- Close Button -->
+                <Button Grid.Column="2" Width="28" Height="28" Background="Transparent" BorderThickness="0"
+                        Foreground="#8E8C9E" FontSize="14" FontWeight="Bold" Cursor="Hand" Click="CloseBtn_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="b" Background="{TemplateBinding Background}" CornerRadius="6">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="b" Property="Background" Value="#252435"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    ✕
+                </Button>
+            </Grid>
+
+            <!-- 2. Settings Content -->
+            <StackPanel Grid.Row="1">
+                <!-- Section 1: APPEARANCE -->
+                <TextBlock Text="APPEARANCE" Foreground="#6C6A80" FontSize="10" FontWeight="Bold" FontFamily="Segoe UI" Margin="2,0,0,8"/>
+
+                <!-- Option A: Floating Pill -->
+                <Border x:Name="FloatingCard" Background="#1B1925" BorderBrush="#2A2838" BorderThickness="1" CornerRadius="10"
+                        Padding="14,10" Margin="0,0,0,8" Cursor="Hand" MouseLeftButtonUp="FloatingCard_Click">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Floating pill" Foreground="#FFFFFF" FontSize="13" FontWeight="SemiBold"/>
+                            <TextBlock Text="A clean pill below the display edge" Foreground="#737185" FontSize="11" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <!-- Radio indicator -->
+                        <Border x:Name="FloatingRadio" Grid.Column="1" Width="18" Height="18" CornerRadius="9" Background="#343245" VerticalAlignment="Center">
+                            <Ellipse x:Name="FloatingRadioDot" Width="8" Height="8" Fill="#8B5CF6" Visibility="Collapsed"/>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- Option B: Full Notch -->
+                <Border x:Name="NotchCard" Background="#241F38" BorderBrush="#7C5BF6" BorderThickness="1.5" CornerRadius="10"
+                        Padding="14,10" Margin="0,0,0,16" Cursor="Hand" MouseLeftButtonUp="NotchCard_Click">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Full notch" Foreground="#FFFFFF" FontSize="13" FontWeight="SemiBold"/>
+                            <TextBlock Text="Seamless with the top display edge" Foreground="#737185" FontSize="11" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <!-- Radio indicator -->
+                        <Border x:Name="NotchRadio" Grid.Column="1" Width="18" Height="18" CornerRadius="9" Background="#7C5BF6" VerticalAlignment="Center">
+                            <Ellipse x:Name="NotchRadioDot" Width="8" Height="8" Fill="White" Visibility="Visible"/>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- Section 2: ISLAND WIDTH -->
+                <TextBlock Text="ISLAND WIDTH" Foreground="#6C6A80" FontSize="10" FontWeight="Bold" FontFamily="Segoe UI" Margin="2,0,0,6"/>
+                <Border Background="#1B1925" BorderBrush="#2A2838" BorderThickness="1" CornerRadius="10" Padding="14,10" Margin="0,0,0,16">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Width" Foreground="#FFFFFF" FontSize="13" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="WidthScaleText" Grid.Row="1" Grid.Column="0" Text="Scale: 100%" Foreground="#8B5CF6" FontSize="11" Margin="0,2,0,6"/>
+
+                        <Slider x:Name="WidthSlider" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Width="160"
+                                Style="{StaticResource PurpleSliderStyle}"
+                                Minimum="60" Maximum="150" Value="100"
+                                ValueChanged="WidthSlider_ValueChanged"/>
+                    </Grid>
+                </Border>
+
+                <!-- Section 3: SPRING BOUNCE -->
+                <TextBlock Text="SPRING BOUNCE" Foreground="#6C6A80" FontSize="10" FontWeight="Bold" FontFamily="Segoe UI" Margin="2,0,0,6"/>
+                <Border Background="#1B1925" BorderBrush="#2A2838" BorderThickness="1" CornerRadius="10" Padding="14,10" Margin="0,0,0,16">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Spring" Foreground="#FFFFFF" FontSize="13" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="BounceText" Grid.Row="1" Grid.Column="0" Text="Bounce: 100" Foreground="#38BDF8" FontSize="11" Margin="0,2,0,6"/>
+
+                        <Slider x:Name="BounceSlider" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Width="160"
+                                Style="{StaticResource CyanSliderStyle}"
+                                Minimum="0" Maximum="180" Value="100"
+                                ValueChanged="BounceSlider_ValueChanged"/>
+                    </Grid>
+                </Border>
+
+                <!-- Section 4: STARTUP -->
+                <TextBlock Text="STARTUP" Foreground="#6C6A80" FontSize="10" FontWeight="Bold" FontFamily="Segoe UI" Margin="2,0,0,6"/>
+                <Border Background="#1B1925" BorderBrush="#2A2838" BorderThickness="1" CornerRadius="10" Padding="14,10" Margin="0,0,0,10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Start with Windows" Foreground="#FFFFFF" FontSize="13" FontWeight="SemiBold"/>
+                            <TextBlock Text="Launch automatically when you sign in" Foreground="#737185" FontSize="11" Margin="0,2,0,0"/>
+                        </StackPanel>
+
+                        <!-- Toggle Switch -->
+                        <Border x:Name="StartupToggleTrack" Grid.Column="1" Width="44" Height="24" CornerRadius="12"
+                                Background="#343245" Cursor="Hand" VerticalAlignment="Center" MouseLeftButtonUp="StartupToggle_Click">
+                            <Ellipse x:Name="StartupToggleThumb" Width="18" Height="18" Fill="White" HorizontalAlignment="Left" Margin="3,0,0,0">
+                                <Ellipse.Effect>
+                                    <DropShadowEffect BlurRadius="4" ShadowDepth="1" Color="#000000" Opacity="0.3"/>
+                                </Ellipse.Effect>
+                            </Ellipse>
+                        </Border>
+                    </Grid>
+                </Border>
+            </StackPanel>
+
+            <!-- 3. Bottom Links / Tabs -->
+            <Grid Grid.Row="2" Margin="0,10,0,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Home" Foreground="#A2A0B8" FontSize="11" Cursor="Hand" Margin="8,0" MouseLeftButtonUp="HomeTab_Click"/>
+                    <TextBlock Text="•" Foreground="#444258" FontSize="11" VerticalAlignment="Center"/>
+                    <TextBlock Text="Show/hide" Foreground="#737188" FontSize="11" Cursor="Hand" Margin="8,0" MouseLeftButtonUp="ShowHideTab_Click"/>
+                    <TextBlock Text="•" Foreground="#444258" FontSize="11" VerticalAlignment="Center"/>
+                    <TextBlock Text="Click pill" Foreground="#737188" FontSize="11" Cursor="Hand" Margin="8,0" MouseLeftButtonUp="ClickPillTab_Click"/>
+                    <TextBlock Text="•" Foreground="#444258" FontSize="11" VerticalAlignment="Center"/>
+                    <TextBlock Text="Expand" Foreground="#737188" FontSize="11" Cursor="Hand" Margin="8,0" MouseLeftButtonUp="ExpandTab_Click"/>
+                    <TextBlock Text="•" Foreground="#444258" FontSize="11" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="DemoMusicTab" Text="🎵 Demo Song" Foreground="#A78BFA" FontSize="11" Cursor="Hand" Margin="8,0" MouseLeftButtonUp="DemoMusicTab_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

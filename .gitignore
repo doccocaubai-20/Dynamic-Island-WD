@@ -1,0 +1,17 @@
+# Build outputs
+**/bin/
+**/obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Local environment and publish artifacts
+*.userprefs
+*.publishsettings
+publish/
+
+# Operating system files
+Thumbs.db
+Desktop.ini
